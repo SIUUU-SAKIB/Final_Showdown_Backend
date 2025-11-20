@@ -62,7 +62,7 @@ const deleteBlogById = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     const result = yield blogs_service_1.blogService.deleteBlogById(req.params.id);
     res.status(200).json({
         status: true,
-        message: "Succssfully deletd the blog",
+        message: "Succssfully deleted the blog ❌",
         data: result
     });
 });

@@ -26,12 +26,10 @@ const ProjectSchema = new mongoose_1.Schema({
     },
     category: {
         type: String,
-        enum: ["frontend", "backend", "fullstack", "other"],
         default: "other",
     },
 }, {
-    timestamps: true, // ✅ adds createdAt & updatedAt
+    timestamps: true,
 });
-// ✅ Prevent model overwrite in dev hot-reloads
 const ProjectModel = (0, mongoose_1.model)("projects", ProjectSchema);
 exports.default = ProjectModel;

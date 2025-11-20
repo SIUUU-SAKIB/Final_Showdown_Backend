@@ -11,6 +11,7 @@ const errorHandler_1 = __importDefault(require("./app/middleware/errorHandler"))
 const notFound_1 = require("./app/middleware/notFound");
 const user_routes_1 = require("./app/modules/user/user.routes");
 const blogs_routes_1 = require("./app/modules/blogs/blogs.routes");
+const project_routes_1 = require("./app/modules/projects/project.routes");
 const app = (0, express_1.default)();
 // MIDDLEWARES
 app.use(express_1.default.json());
@@ -24,6 +25,7 @@ app.use(errorHandler_1.default);
 // MAIN ROUTES
 app.use('/api/v1/', user_routes_1.userRoutes);
 app.use('/api/v1/', blogs_routes_1.blogsRoute);
+app.use('/api/v1/project/', project_routes_1.projectsRoute);
 // DEFAULT ROUTE
 app.get(`/`, (req, res) => {
     res.status(200).json({

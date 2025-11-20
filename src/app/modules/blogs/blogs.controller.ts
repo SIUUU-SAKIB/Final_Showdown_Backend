@@ -41,9 +41,9 @@ const updateBlog = async (req: Request, res: Response) => {
     })
 }
 
-const getBlogById = async (req: Request, res: Response, next:NextFunction
-)=> {
-    const {id} = req.params
+const getBlogById = async (req: Request, res: Response, next: NextFunction
+) => {
+    const { id } = req.params
     const result = await blogService.getBlogById(id)
     res.status(200).json({
         status: true,
@@ -51,13 +51,13 @@ const getBlogById = async (req: Request, res: Response, next:NextFunction
         data: result
     })
 }
-const deleteBlogById = async (req: Request, res: Response, next:NextFunction
-)=>{
+const deleteBlogById = async (req: Request, res: Response, next: NextFunction
+) => {
     const result = await blogService.deleteBlogById(req.params.id)
     res.status(200).json({
         status: true,
-        message: "Succssfully deletd the blog",
+        message: "Succssfully deleted the blog ❌",
         data: result
     })
 }
-export const blogController = {getBlogById, createBlog, getAllBlogs, updateBlog, deleteBlogById }
+export const blogController = { getBlogById, createBlog, getAllBlogs, updateBlog, deleteBlogById }
