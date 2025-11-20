@@ -4,9 +4,9 @@ import { setAuthCookie } from "../../utils/setCookie";
 import { User, UserModel } from "./user.interface";
 import bcrypt from "bcryptjs"
 const createUser = async (payload: Partial<User>) => {
+    console.log(UserModel)
     const { password, email, name, role } = payload
     const isUserExist = await UserModel.findOne({ email: payload.email })
-    console.log(payload)
     if (isUserExist) {
         throw Error("User already exist")
     }
@@ -24,6 +24,7 @@ const createUser = async (payload: Partial<User>) => {
 
 const login = async (payload: Partial<User>) => {
     const { email, password } = payload
+    console.log(email, password)
     const isUserExist = await UserModel.findOne({ email })
     if (!isUserExist) {
         throw Error("Email does not exist")

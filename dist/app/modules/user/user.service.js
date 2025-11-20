@@ -28,9 +28,9 @@ const JWT_1 = require("../../utils/JWT");
 const user_interface_1 = require("./user.interface");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(user_interface_1.UserModel);
     const { password, email, name, role } = payload;
     const isUserExist = yield user_interface_1.UserModel.findOne({ email: payload.email });
-    console.log(payload);
     if (isUserExist) {
         throw Error("User already exist");
     }
@@ -45,6 +45,7 @@ const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = payload;
+    console.log(email, password);
     const isUserExist = yield user_interface_1.UserModel.findOne({ email });
     if (!isUserExist) {
         throw Error("Email does not exist");
