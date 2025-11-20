@@ -11,12 +11,11 @@ const app = express()
 
 // MIDDLEWARES
 app.use(express.json())
-app.use(
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
-);
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(cookieParser())
 app.use(compression())
 app.use(errorHandler)
