@@ -24,7 +24,6 @@ const createUser = async (payload: Partial<User>) => {
 
 const login = async (payload: Partial<User>) => {
     const { email, password } = payload
-    console.log(email, password)
     const isUserExist = await UserModel.findOne({ email })
     if (!isUserExist) {
         throw Error("Email does not exist")

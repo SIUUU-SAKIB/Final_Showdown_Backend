@@ -45,7 +45,6 @@ const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = payload;
-    console.log(email, password);
     const isUserExist = yield user_interface_1.UserModel.findOne({ email });
     if (!isUserExist) {
         throw Error("Email does not exist");

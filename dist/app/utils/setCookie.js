@@ -5,7 +5,7 @@ const env_config_1 = require("../config/env.config");
 const setAuthCookie = (res, tokenInfo) => {
     if (tokenInfo.accessToken) {
         res.cookie("accessToken", tokenInfo.accessToken, {
-            httpOnly: env_config_1.envVariable.NODE_ENV === "production",
+            httpOnly: env_config_1.envVariable.NODE_ENV === "development",
             secure: false
         });
     }
