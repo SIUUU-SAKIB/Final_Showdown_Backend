@@ -5,7 +5,7 @@ const setAuthCookie = (res, tokenInfo) => {
     const isProduction = process.env.NODE_ENV === "production";
     res.cookie("accessToken", tokenInfo.accessToken, {
         httpOnly: true,
-        secure: isProduction, // Only secure in production
+        secure: isProduction,
         sameSite: isProduction ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000,
     });
