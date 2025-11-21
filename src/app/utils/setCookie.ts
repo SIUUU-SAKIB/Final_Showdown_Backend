@@ -11,8 +11,8 @@ export const setAuthCookie = (res: Response, tokenInfo: any) => {
 
     res.cookie("accessToken", tokenInfo.accessToken, {
         httpOnly: true,
-        secure: isProduction, 
-        sameSite: isProduction ? "none" : "lax",
+        secure: isProduction,          // 🔥 REQUIRED on Vercel
+        sameSite: isProduction ? "none" : "lax", // 🔥 REQUIRED on Vercel
         maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -23,4 +23,3 @@ export const setAuthCookie = (res: Response, tokenInfo: any) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 };
-

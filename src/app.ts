@@ -11,8 +11,9 @@ const app = express()
 
 // MIDDLEWARES
 app.use(express.json())
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: "https://final-showdown-frontend.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
