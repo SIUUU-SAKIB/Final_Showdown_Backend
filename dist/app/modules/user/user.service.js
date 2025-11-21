@@ -47,23 +47,23 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = payload;
     const isUserExist = yield user_interface_1.UserModel.findOne({ email });
     if (!isUserExist) {
-        throw Error("Email does not exist");
+        throw new Error("Email does not exist");
     }
-    const passwordMatched = yield bcryptjs_1.default.compare(password, isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.password);
+    const passwordMatched = yield bcryptjs_1.default.compare(password, isUserExist.password);
     if (!passwordMatched) {
-        throw Error("Wrong password");
+        throw new Error("Wrong password");
     }
     const JwtPayload = {
-        userId: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist._id,
-        email: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.email,
-        role: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.role
+        userId: isUserExist._id,
+        email: isUserExist.email,
+        role: isUserExist.role
     };
     const accessToken = (0, JWT_1.generateToken)(JwtPayload, "1d");
     const refreshToken = (0, JWT_1.generateToken)(JwtPayload, "7d");
-    const _a = isUserExist.toObject(), { password: pass } = _a, rest = __rest(_a, ["password"]);
+    const _a = isUserExist.toObject(), { password: _ } = _a, rest = __rest(_a, ["password"]);
     return {
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        accessToken,
+        refreshToken,
         user: rest
     };
 });

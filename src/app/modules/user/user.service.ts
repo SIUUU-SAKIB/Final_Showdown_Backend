@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { envVariable } from "../../config/env.config";
 import { generateToken } from "../../utils/JWT";
 import { setAuthCookie } from "../../utils/setCookie";
@@ -23,31 +24,34 @@ const createUser = async (payload: Partial<User>) => {
 
 
 const login = async (payload: Partial<User>) => {
-    const { email, password } = payload
-    const isUserExist = await UserModel.findOne({ email })
+    const { email, password } = payload;
+
+    const isUserExist = await UserModel.findOne({ email });
     if (!isUserExist) {
-        throw Error("Email does not exist")
+        throw new Error("Email does not exist");
     }
-    const passwordMatched = await bcrypt.compare(password as string, isUserExist?.password)
+
+    const passwordMatched = await bcrypt.compare(password as string, isUserExist.password);
     if (!passwordMatched) {
-        throw Error("Wrong password")
+        throw new Error("Wrong password");
     }
 
     const JwtPayload = {
-        userId: isUserExist?._id,
-        email: isUserExist?.email,
-        role: isUserExist?.role
+        userId: isUserExist._id,
+        email: isUserExist.email,
+        role: isUserExist.role
+    };
 
-    }
-    const accessToken = generateToken(JwtPayload, "1d")
-    const refreshToken = generateToken(JwtPayload, "7d")
+    const accessToken = generateToken(JwtPayload, "1d");
+    const refreshToken = generateToken(JwtPayload, "7d");
 
-    const { password: pass, ...rest } = isUserExist.toObject()
+    const { password: _, ...rest } = isUserExist.toObject();
+
     return {
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        accessToken,
+        refreshToken,
         user: rest
-    }
+    };
+};
 
-}
 export const uesrservice = { createUser, login }

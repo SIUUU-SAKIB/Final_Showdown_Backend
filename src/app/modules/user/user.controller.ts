@@ -17,14 +17,17 @@ const createUser = async (req: Request, res: Response) => {
 }
 
 const login = async (req: Request, res: Response) => {
-    const user = await uesrservice.login(req.body)
-    setAuthCookie(res, user)
+    const tokenInfo = await uesrservice.login(req.body);
+
+    setAuthCookie(res, tokenInfo);
+
     res.status(200).json({
         status: true,
-        message: "🎉🎉🎉 Login Successfull",
-        user
-    })
-}
+        message: "🎉 Login Successful",
+        user: tokenInfo.user
+    });
+};
+
 
 
 const getCurrentUser = async (req: Request, res: Response) => {
@@ -51,10 +54,18 @@ const getCurrentUser = async (req: Request, res: Response) => {
 
 const logoutUser = async(req:Request, res:Response,next:NextFunction) => {
     try{
+        const isProduction = process.env.NODE_ENV === "production";
        res.clearCookie("accessToken", {
         httpOnly:true,
-        secure:envVariable.NODE_ENV === "production",
-        sameSite:"strict"
+        secure:isProduction,
+        sameSite:"none",
+        expires: new Date(0)
+       })
+       res.clearCookie("refreshToken", {
+        httpOnly:true,
+        secure:isProduction,
+        sameSite:"none",
+        expires: new Date(0)
        })
        res.status(200).json({
         message:"User Logged out successfully"

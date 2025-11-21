@@ -14,7 +14,6 @@ const user_service_1 = require("./user.service");
 const setCookie_1 = require("../../utils/setCookie");
 const JWT_1 = require("../../utils/JWT");
 const user_interface_1 = require("./user.interface");
-const env_config_1 = require("../../config/env.config");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const paylaod = yield req.body;
     const user = yield user_service_1.uesrservice.createUser(paylaod);
@@ -25,12 +24,12 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     });
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_service_1.uesrservice.login(req.body);
-    (0, setCookie_1.setAuthCookie)(res, user);
+    const tokenInfo = yield user_service_1.uesrservice.login(req.body);
+    (0, setCookie_1.setAuthCookie)(res, tokenInfo);
     res.status(200).json({
         status: true,
-        message: "🎉🎉🎉 Login Successfull",
-        user
+        message: "🎉 Login Successful",
+        user: tokenInfo.user
     });
 });
 const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,10 +54,18 @@ const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 const logoutUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const isProduction = process.env.NODE_ENV === "production";
         res.clearCookie("accessToken", {
             httpOnly: true,
-            secure: env_config_1.envVariable.NODE_ENV === "production",
-            sameSite: "strict"
+            secure: isProduction,
+            sameSite: "none",
+            expires: new Date(0)
+        });
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: "none",
+            expires: new Date(0)
         });
         res.status(200).json({
             message: "User Logged out successfully"
