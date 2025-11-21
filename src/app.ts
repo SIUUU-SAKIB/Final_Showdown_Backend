@@ -20,6 +20,7 @@ app.use(cookieParser())
 app.use(compression())
 app.use(errorHandler)
 
+app.set("trust proxy", 1);
 
 // MAIN ROUTES
 app.use('/api/v1/', userRoutes)

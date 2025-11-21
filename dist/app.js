@@ -23,6 +23,7 @@ app.use((0, cors_1.default)({
 app.use((0, cookie_parser_1.default)());
 app.use((0, compression_1.default)());
 app.use(errorHandler_1.default);
+app.set("trust proxy", 1);
 // MAIN ROUTES
 app.use('/api/v1/', user_routes_1.userRoutes);
 app.use('/api/v1/', blogs_routes_1.blogsRoute);
